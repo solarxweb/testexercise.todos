@@ -12,5 +12,6 @@ Stack:
 * Redux Toolkit
 * Playwright
 
-![Preview .w/ reset && ui update](https://github.com/user-attachments/assets/385903e3-852a-48f7-b69d-0144c95c079c)
+![Preview .w/ reset && ui update](https://github.com/user-attachments/assets/c72d6999-0bac-4f68-985f-364e9ccdafb6)
+
 
