@@ -1,3 +1,4 @@
+[![Playwright Tests](https://github.com/solarxweb/testexercise.todos/actions/workflows/playwright.yml/badge.svg?branch=main)](https://github.com/solarxweb/testexercise.todos/actions/workflows/playwright.yml)
 # Simple todos application
 
 > For install && start
