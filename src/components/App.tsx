@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
 import { IState, IStatusState, ITodo, Status } from "../types/data";
-import { addTask, makeReserved, makeCompleted } from "../slices/todosSlice";
+import { addTask, makeReserved, makeCompleted, removeCompleted } from "../slices/todosSlice";
 import { setStatus } from '../slices/filterBySlice';
 import cn from 'classnames';
 
@@ -53,7 +53,7 @@ const App = () => {
     }
   };
 
-  function changeStatus(status: string, id: number, developer?: string): void {
+  function changeStatus(status: 'active' | 'inactive', id: number, developer?: string): void {
     switch (status) {
       case 'inactive':
         dispatch(makeReserved({ id, developer }));
@@ -66,7 +66,7 @@ const App = () => {
         return;
     }
   }
-
+  
   const renderItems = () => {
     let filteredItems = items;
     switch (status) {
@@ -84,16 +84,25 @@ const App = () => {
     }
 
     return filteredItems.map((item: ITodo) => (
-      <li key={item.id} className={cn('todo-list__item', {
+      <li key={item.id} className={cn('todo-list__item item', {
         inactive: item.status === 'inactive',
         active: item.status === 'active',
         completed: item.status === 'completed',
       })}
       ref={item.id === filteredItems.at(-1)?.id ? lastTask : null}>
-        <button onClick={() => changeStatus(item.status as 'active' | 'inactive', item.id!, item.developer!)}>{item.title}</button>
+        <div className='item__body'>
+          {item.title}
+          {
+          (item.status === 'active' || item.status === 'inactive') ? <button className='btn-confirm' onClick={() =>
+            changeStatus(item.status as 'active' | 'inactive', item.id!, item.developer!)}>
+            {item.status === 'active' ? 'done?' : 'take it'}
+          </button>
+          : null
+        }
+        </div>
       </li>
     ));
-};
+  };
 
   return (
     <main>
@@ -143,6 +152,13 @@ const App = () => {
                   dispatch(setStatus(Status.Completed));
                 }}>
                 Completed
+              </button>
+              <button type='button' className='reset-button' onClick={() => dispatch(removeCompleted({status: 'completed'}))}>
+                <svg viewBox='0 0 20 20' width={14} height={14}>
+                  <circle r="6" cx="10" cy="12" fill="none" stroke="grey" stroke-width="2" stroke-dasharray="16 10"/>
+                  <polygon points="3,8 10,10 10,3" fill='grey'/>
+                </svg>
+                <div className="reset-button__tooltip">Remove completed</div>
               </button>
             </div>
           </div>

@@ -20,8 +20,10 @@ const todosSlice = createSlice({
       payload.status = 'inactive';
       state.entities.push(payload);
     },
-    removeTask: (state, action) => {
-      state.entities.filter((el: ITodo) => el.id !== action.payload.id);
+    removeCompleted: (state, action) => {
+      if (state.entities.length === 0) return;
+      const rest = state.entities.filter((el: ITodo) => el.status !== action.payload.status);
+      state.entities = rest;
     },
     makeCompleted: (state, { payload }) => {
       const { id, developer } = payload;
@@ -49,5 +51,5 @@ const todosSlice = createSlice({
   }
 });
 
-export const { addTask, addError, makeReserved, makeCompleted } = todosSlice.actions;
+export const { addTask, addError, makeReserved, makeCompleted, removeCompleted } = todosSlice.actions;
 export default todosSlice.reducer;
