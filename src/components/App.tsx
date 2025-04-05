@@ -84,7 +84,7 @@ const App = () => {
     }
 
     return filteredItems.map((item: ITodo) => (
-      <li key={item.id} className={cn('todo-list__item item', {
+      <li key={item.id} className={cn('todo-list__item', {
         inactive: item.status === 'inactive',
         active: item.status === 'active',
         completed: item.status === 'completed',
