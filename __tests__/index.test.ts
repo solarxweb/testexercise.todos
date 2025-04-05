@@ -7,6 +7,10 @@ test('check start state', async ({ page }) => {
   await expect(page.getByPlaceholder('What needs to be done?')).toBeFocused();
 
   const defaultButton = page.locator('button', { hasText: 'All' });
+  
+  const buttonTakeIt = page.locator('button', { hasText: 'take it'});
+  const buttonDone = page.locator('button', { hasText: 'done?'});
+
   await expect(defaultButton).toHaveClass('todo-btn selected');
 
   await page.getByPlaceholder('What needs to be done?').fill('create task');
@@ -17,7 +21,7 @@ test('check start state', async ({ page }) => {
   await expect(task).toBeVisible();
   await expect(task).toHaveClass('todo-list__item inactive');
 
-  await task.click();
+  await buttonTakeIt.click();
 
   await expect(task).toHaveClass('todo-list__item active');
 
@@ -36,8 +40,20 @@ test('check start state', async ({ page }) => {
   await expect(tasks).toHaveCount(2);
 
   const btnWithActiveTasks = page.locator('button', { hasText: 'Active'});
+  const btnWithCompletedTasks = page.locator('.todo-btn', { hasText: 'Completed'});
 
   btnWithActiveTasks.click();
 
   await expect(counter).toHaveText(/1/);
+
+  await buttonDone.click();
+  await btnWithCompletedTasks.click();
+
+  await expect(counter).toHaveText(/1/);
+
+  const resetBtn = page.locator('.reset-button');
+
+  await resetBtn.click();
+
+  await expect(counter).toHaveText(/0/);
 });
