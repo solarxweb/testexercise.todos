@@ -53,7 +53,7 @@ const App = () => {
     }
   };
 
-  function changeStatus<T, U extends number, V extends string>(status: T, id: U, developer: V): void {
+  function changeStatus(status: string, id: number, developer?: string): void {
     switch (status) {
       case 'inactive':
         dispatch(makeReserved({ id, developer }));
