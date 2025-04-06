@@ -91,17 +91,17 @@ const App = () => {
       })}
       ref={item.id === filteredItems.at(-1)?.id ? lastTask : null}>
         <div className='item__body'>
-          {item.title}
+          <p>{item.title}</p>
           {
-          (item.status === 'active' || item.status === 'inactive') ? <button className='btn-confirm' onClick={() =>
-            changeStatus(item.status as 'active' | 'inactive', item.id!, item.developer!)}>
+          (item.status === 'active' || item.status === 'inactive') ?
+          <button className='btn-confirm' onClick={() => changeStatus(item.status as 'active' | 'inactive', item.id!, item.developer!)}>
             {item.status === 'active' ? 'done?' : 'take it'}
-          </button>
-          : null
+          </button> : null
         }
         </div>
       </li>
-    ));
+    )
+  );
   };
 
   return (
@@ -155,7 +155,7 @@ const App = () => {
               </button>
               <button type='button' className='reset-button' onClick={() => dispatch(removeCompleted({status: 'completed'}))}>
                 <svg viewBox='0 0 20 20' width={14} height={14}>
-                  <circle r="6" cx="10" cy="12" fill="none" stroke="grey" stroke-width="2" stroke-dasharray="16 10"/>
+                  <circle r="6" cx="10" cy="12" fill="none" stroke="grey" stroke-width="2" strokeDasharray="16 10"/>
                   <polygon points="3,8 10,10 10,3" fill='grey'/>
                 </svg>
                 <div className="reset-button__tooltip">Remove completed</div>
