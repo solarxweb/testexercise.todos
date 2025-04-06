@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('check start state', async ({ page }) => {
+test('seems like e2e test', async ({ page }) => {
   await page.goto('http://localhost:3000')
 
     //** check autoFocus 1 */
