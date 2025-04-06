@@ -21,7 +21,7 @@ const todosSlice = createSlice({
       state.entities.push(payload);
     },
     removeCompleted: (state, action) => {
-      if (state.entities.length === 0) return;
+      if (!state.entities.find((el) => el.status === 'completed')) return;
       const rest = state.entities.filter((el: ITodo) => el.status !== action.payload.status);
       state.entities = rest;
     },
