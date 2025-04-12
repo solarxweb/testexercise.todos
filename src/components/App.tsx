@@ -1,9 +1,10 @@
 import './App.css';
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import _ from 'lodash';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
 import { IState, IStatusState, ITodo, Status } from "../types/data";
-import { addTask, makeReserved, makeCompleted, removeCompleted } from "../slices/todosSlice";
+import { addTask, addTasks, makeReserved, makeCompleted, removeCompleted } from "../slices/todosSlice";
 import { setStatus } from '../slices/filterBySlice';
 import cn from 'classnames';
 
@@ -15,12 +16,23 @@ const App = () => {
   const [taskName, setTaskName] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const inputField = useRef<HTMLInputElement | null>(null);
-  const lastTask = useRef<HTMLLIElement | null>(null);
+  const lastTask = useRef<HTMLLIElement | null>(null); 
+
+  useEffect(() => {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+      dispatch(addTasks(JSON.parse(savedTasks)));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(items));
+  }, [items]);
 
   useEffect(() => {
     if (lastTask.current) lastTask.current.scrollIntoView({ behavior: 'smooth', block: 'end'})
     if (inputField.current) inputField.current.focus();
-  }, [items]);
+  }, [items.length]);
 
   const scheme = yup.object({
     title: yup
@@ -35,7 +47,7 @@ const App = () => {
     scheme.validate({ title: taskName })
       .then((validatedTitle: { title: string }) => {
         const { title } = validatedTitle;
-        dispatch(addTask({ id: items.length + 1, title, status: 'inactive' }));
+        dispatch(addTask({ id: parseInt(_.uniqueId()), title, status: 'inactive' }));
         setTaskName('');
         setErrMsg('');
       })
@@ -109,7 +121,7 @@ const App = () => {
         <div>
           {errMsg && <p className="error-message">{errMsg}</p>}
         </div>
-        <h2><a className='title' href="/" rel="noopener noreferrer">todos</a></h2>
+        <h2><a className='title' href="/" target='#' rel="noopener noreferrer">todos</a></h2>
         <div className="list-container">
           <div className='todo-list__body'>
             <div className="form-control">

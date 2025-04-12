@@ -11,7 +11,6 @@ export interface ITodosState {
   errors: string[],
 };
 
-
 export interface IState {
   todos: ITodosState;
 };

@@ -20,7 +20,7 @@ jobs:
     - name: Start localhost
       run: |
         npm start &
-        sleep 30
+        sleep 70
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v4
