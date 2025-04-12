@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('seems like e2e test', async ({ page }) => {
-  await page.goto('http://localhost:3000')
+  await page.goto('/')
 
     //** check autoFocus 1 */
   await expect(page.getByPlaceholder('What needs to be done?')).toBeFocused();

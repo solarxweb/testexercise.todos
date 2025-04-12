@@ -2,7 +2,6 @@ import './App.css';
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
-import axios from 'axios';
 import { IState, IStatusState, ITodo, Status } from "../types/data";
 import { addTask, makeReserved, makeCompleted, removeCompleted } from "../slices/todosSlice";
 import { setStatus } from '../slices/filterBySlice';
