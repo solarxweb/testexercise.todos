@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios';
 import { IState, IStatusState, ITodo, Status } from "../types/data";
 import { addTask, makeReserved, makeCompleted, removeCompleted } from "../slices/todosSlice";
 import { setStatus } from '../slices/filterBySlice';
@@ -16,7 +17,6 @@ const App = () => {
   const [errMsg, setErrMsg] = useState('');
   const inputField = useRef<HTMLInputElement | null>(null);
   const lastTask = useRef<HTMLLIElement | null>(null);
-
 
   useEffect(() => {
     if (lastTask.current) lastTask.current.scrollIntoView({ behavior: 'smooth', block: 'end'})
@@ -155,7 +155,7 @@ const App = () => {
               </button>
               <button type='button' className='reset-button' onClick={() => dispatch(removeCompleted({status: 'completed'}))}>
                 <svg viewBox='0 0 20 20' width={14} height={14}>
-                  <circle r="6" cx="10" cy="12" fill="none" stroke="grey" stroke-width="2" strokeDasharray="16 10"/>
+                  <circle r="6" cx="10" cy="12" fill="none" stroke="grey" strokeWidth="2" strokeDasharray="16 10"/>
                   <polygon points="3,8 10,10 10,3" fill='grey'/>
                 </svg>
                 <div className="reset-button__tooltip">Remove completed</div>

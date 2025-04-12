@@ -20,7 +20,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-, "eslint.config.js"  ]
+  "include": ["frontend/src/**/*.tsx", "frontend/eslint.config.js", "eslint.config.js", "frontend/src/index.jsx"],
+  "exclude": ["node_modules"]
 }

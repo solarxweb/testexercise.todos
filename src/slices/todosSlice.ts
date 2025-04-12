@@ -16,8 +16,10 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    addTasks: (state, { payload }: PayloadAction<ITodo[]>) => {
+      state.entities = [...state.entities, ...payload]
+    },
     addTask: (state, { payload }: PayloadAction<ITodo>) => {
-      payload.status = 'inactive';
       state.entities.push(payload);
     },
     removeCompleted: (state, action) => {
@@ -51,5 +53,5 @@ const todosSlice = createSlice({
   }
 });
 
-export const { addTask, addError, makeReserved, makeCompleted, removeCompleted } = todosSlice.actions;
+export const { addTask, addTasks, addError, makeReserved, makeCompleted, removeCompleted } = todosSlice.actions;
 export default todosSlice.reducer;
