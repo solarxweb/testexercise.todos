@@ -22,9 +22,9 @@ const todosSlice = createSlice({
     addTask: (state, { payload }: PayloadAction<ITodo>) => {
       state.entities.push(payload);
     },
-    removeCompleted: (state, action) => {
+    removeCompleted: (state) => {
       if (!state.entities.find((el) => el.status === 'completed')) return;
-      const rest = state.entities.filter((el: ITodo) => el.status !== action.payload.status);
+      const rest = state.entities.filter((el: ITodo) => el.status !== 'completed');
       state.entities = rest;
     },
     makeCompleted: (state, { payload }) => {

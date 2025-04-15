@@ -1,5 +1,5 @@
 export type ITodo = {
-  id?: number | null;
+  id?: string | null;
   date?: string;
   title?: string | '';
   developer?: string | null;

@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import _ from 'lodash';
+import { v4 as uuidv4 } from 'uuid'
 import * as yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
 import { IState, IStatusState, ITodo, Status } from "../types/data";
@@ -47,7 +47,7 @@ const App = () => {
     scheme.validate({ title: taskName })
       .then((validatedTitle: { title: string }) => {
         const { title } = validatedTitle;
-        dispatch(addTask({ id: parseInt(_.uniqueId()), title, status: 'inactive' }));
+        dispatch(addTask({ id: uuidv4(), title, status: 'inactive', developer: 'root' }));
         setTaskName('');
         setErrMsg('');
       })
@@ -55,7 +55,7 @@ const App = () => {
         console.log(e.message);
         setErrMsg(e.message);
       });
-  }, [dispatch, items.length, scheme, taskName]);
+  }, [dispatch, scheme, taskName]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -64,7 +64,7 @@ const App = () => {
     }
   };
 
-  function changeStatus(status: 'active' | 'inactive', id: number, developer?: string): void {
+  async function changeStatus(status: 'active' | 'inactive', id: number, developer?: string): Promise<void> {
     switch (status) {
       case 'inactive':
         dispatch(makeReserved({ id, developer }));
@@ -76,6 +76,12 @@ const App = () => {
         console.error(`Change status of this task isn't possible. status: ${status}\n`);
         return;
     }
+  }
+
+  const removeCompletedTasks = async () => {
+    localStorage.clear();
+    dispatch(removeCompleted());
+    localStorage.setItem('tasks', JSON.stringify(items));
   }
   
   const renderItems = () => {
@@ -164,7 +170,7 @@ const App = () => {
                 }}>
                 Completed
               </button>
-              <button type='button' className='reset-button' onClick={() => dispatch(removeCompleted({status: 'completed'}))}>
+              <button type='button' className='reset-button' onClick={removeCompletedTasks}>
                 <svg viewBox='0 0 20 20' width={14} height={14}>
                   <circle r="6" cx="10" cy="12" fill="none" stroke="grey" strokeWidth="2" strokeDasharray="16 10"/>
                   <polygon points="3,8 10,10 10,3" fill='grey'/>
