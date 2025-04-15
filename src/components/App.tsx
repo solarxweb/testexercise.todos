@@ -64,7 +64,7 @@ const App = () => {
     }
   };
 
-  async function changeStatus(status: 'active' | 'inactive', id: number, developer?: string): Promise<void> {
+  async function changeStatus(status: 'active' | 'inactive', id: string, developer?: string): Promise<void> {
     switch (status) {
       case 'inactive':
         dispatch(makeReserved({ id, developer }));
