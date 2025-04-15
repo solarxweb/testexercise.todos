@@ -12,6 +12,7 @@ Stack:
 * React
 * Redux Toolkit
 * Playwright
+* Docker
 
 ![Preview .w/ reset && ui update](https://github.com/user-attachments/assets/5bd053cf-c084-4597-af75-d93b98e35951)
 
