@@ -135,7 +135,7 @@ const App = () => {
                 className='task-input'
                 type="text"
                 value={taskName}
-                onKeyDown={handleKeyDown}
+                onKeyDown={(e) => handleKeyDown(e)}
                 onChange={(e) => setTaskName(e.target.value)}
                 ref={inputField}
                 placeholder='What needs to be done?'
